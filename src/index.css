@@ -1,0 +1,282 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-page: var(--bg-page);
+  --color-brand-card: var(--bg-card);
+  --color-brand-border: var(--border-color);
+  --color-brand-text: var(--text-main);
+  --color-brand-muted: var(--text-muted);
+  --color-brand-accent: var(--accent-color);
+  --color-brand-hover: var(--accent-hover);
+  --color-brand-textaccent: var(--accent-text);
+  --color-brand-light: var(--accent-light);
+}
+
+:root {
+  --bg-page: #f8fafc;
+  --bg-card: #ffffff;
+  --border-color: #e2e8f0;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --accent-color: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-text: #4f46e5;
+  --accent-light: #e0e7ff;
+}
+
+/* Cosmic (Dark Theme) */
+.theme-cosmic {
+  --bg-page: #0b0f19;
+  --bg-card: #151b26;
+  --border-color: #1e293b;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --accent-color: #7c3AED;
+  --accent-hover: #6d28d9;
+  --accent-text: #a78bfa;
+  --accent-light: rgba(124, 58, 237, 0.15);
+}
+
+/* Aurora (Teal Dark Theme) */
+.theme-aurora {
+  --bg-page: #060b11;
+  --bg-card: #0d1520;
+  --border-color: #1e2d3d;
+  --text-main: #e2e8f0;
+  --text-muted: #8fa2b5;
+  --accent-color: #0d9488;
+  --accent-hover: #0f766e;
+  --accent-text: #2dd4bf;
+  --accent-light: rgba(13, 148, 136, 0.15);
+}
+
+/* Sunset (Warm Peach Light Theme) */
+.theme-sunset {
+  --bg-page: #FAF5F0;
+  --bg-card: #FCFBF9;
+  --border-color: #E6DDD5;
+  --text-main: #433422;
+  --text-muted: #8E7A66;
+  --accent-color: #EA580C;
+  --accent-hover: #C2410C;
+  --accent-text: #F97316;
+  --accent-light: #FFEDD5;
+}
+
+/* Cyber (Neon Cyberpunk Dark Theme) */
+.theme-cyber {
+  --bg-page: #080312;
+  --bg-card: #140b24;
+  --border-color: #2e104e;
+  --text-main: #f6f1fc;
+  --text-muted: #b7a3cc;
+  --accent-color: #d946ef;
+  --accent-hover: #c084fc;
+  --accent-text: #f472b6;
+  --accent-light: rgba(217, 70, 239, 0.15);
+}
+
+/* Universal override classes for non-light themes to bypass hardcoded Tailwind class names */
+.theme-cosmic, .theme-aurora, .theme-cyber {
+  color-scheme: dark;
+}
+
+/* Page body backgrounds */
+.theme-cosmic.min-h-screen, .theme-cosmic .bg-slate-50,
+.theme-aurora.min-h-screen, .theme-aurora .bg-slate-50,
+.theme-cyber.min-h-screen, .theme-cyber .bg-slate-50 {
+  background-color: var(--bg-page) !important;
+  color: var(--text-main);
+}
+
+/* Card and component backgrounds */
+.theme-cosmic .bg-white,
+.theme-aurora .bg-white,
+.theme-cyber .bg-white {
+  background-color: var(--bg-card) !important;
+  color: var(--text-main);
+}
+
+/* Warm Light theme overrides for sunset styling */
+.theme-sunset.min-h-screen, .theme-sunset .bg-slate-50 {
+  background-color: var(--bg-page) !important;
+  color: var(--text-main);
+}
+.theme-sunset .bg-white {
+  background-color: var(--bg-card) !important;
+}
+
+/* Custom element content defaults override */
+.theme-cosmic h1, .theme-cosmic h2, .theme-cosmic h3, .theme-cosmic h4, .theme-cosmic h5, .theme-cosmic h6,
+.theme-aurora h1, .theme-aurora h2, .theme-aurora h3, .theme-aurora h4, .theme-aurora h5, .theme-aurora h6,
+.theme-sunset h1, .theme-sunset h2, .theme-sunset h3, .theme-sunset h4, .theme-sunset h5, .theme-sunset h6,
+.theme-cyber h1, .theme-cyber h2, .theme-cyber h3, .theme-cyber h4, .theme-cyber h5, .theme-cyber h6 {
+  color: var(--text-main) !important;
+}
+
+.theme-cosmic p, .theme-aurora p, .theme-sunset p, .theme-cyber p {
+  color: var(--text-main);
+}
+
+/* Text gray classes map to muted */
+.theme-cosmic .text-slate-950, .theme-cosmic .text-slate-900, .theme-cosmic .text-slate-800, .theme-cosmic .text-slate-700, .theme-cosmic .text-slate-600,
+.theme-aurora .text-slate-950, .theme-aurora .text-slate-900, .theme-aurora .text-slate-800, .theme-aurora .text-slate-700, .theme-aurora .text-slate-600,
+.theme-cyber .text-slate-950, .theme-cyber .text-slate-900, .theme-cyber .text-slate-800, .theme-cyber .text-slate-700, .theme-cyber .text-slate-600,
+.theme-sunset .text-slate-950, .theme-sunset .text-slate-900, .theme-sunset .text-slate-800, .theme-sunset .text-slate-700, .theme-sunset .text-slate-600,
+
+.theme-cosmic .text-gray-950, .theme-cosmic .text-gray-900, .theme-cosmic .text-gray-800, .theme-cosmic .text-gray-700, .theme-cosmic .text-gray-600,
+.theme-aurora .text-gray-950, .theme-aurora .text-gray-900, .theme-aurora .text-gray-800, .theme-aurora .text-gray-700, .theme-aurora .text-gray-600,
+.theme-cyber .text-gray-950, .theme-cyber .text-gray-900, .theme-cyber .text-gray-800, .theme-cyber .text-gray-700, .theme-cyber .text-gray-600,
+.theme-sunset .text-gray-950, .theme-sunset .text-gray-900, .theme-sunset .text-gray-800, .theme-sunset .text-gray-700, .theme-sunset .text-gray-600,
+
+.theme-cosmic .text-zinc-950, .theme-cosmic .text-zinc-900, .theme-cosmic .text-zinc-800, .theme-cosmic .text-zinc-700, .theme-cosmic .text-zinc-600,
+.theme-aurora .text-zinc-950, .theme-aurora .text-zinc-900, .theme-aurora .text-zinc-800, .theme-aurora .text-zinc-700, .theme-aurora .text-zinc-600,
+.theme-cyber .text-zinc-950, .theme-cyber .text-zinc-900, .theme-cyber .text-zinc-800, .theme-cyber .text-zinc-700, .theme-cyber .text-zinc-600,
+.theme-sunset .text-zinc-950, .theme-sunset .text-zinc-900, .theme-sunset .text-zinc-800, .theme-sunset .text-zinc-700, .theme-sunset .text-zinc-600,
+
+.theme-cosmic .text-neutral-950, .theme-cosmic .text-neutral-900, .theme-cosmic .text-neutral-800, .theme-cosmic .text-neutral-700, .theme-cosmic .text-neutral-600,
+.theme-aurora .text-neutral-950, .theme-aurora .text-neutral-900, .theme-aurora .text-neutral-800, .theme-aurora .text-neutral-700, .theme-aurora .text-neutral-600,
+.theme-cyber .text-neutral-950, .theme-cyber .text-neutral-900, .theme-cyber .text-neutral-800, .theme-cyber .text-neutral-700, .theme-cyber .text-neutral-600,
+.theme-sunset .text-neutral-950, .theme-sunset .text-neutral-900, .theme-sunset .text-neutral-800, .theme-sunset .text-neutral-700, .theme-sunset .text-neutral-600,
+
+.theme-cosmic .text-black, .theme-aurora .text-black, .theme-cyber .text-black, .theme-sunset .text-black {
+  color: var(--text-main) !important;
+}
+
+.theme-cosmic .text-slate-500, .theme-cosmic .text-slate-400, .theme-cosmic .text-slate-300,
+.theme-aurora .text-slate-500, .theme-aurora .text-slate-400, .theme-aurora .text-slate-300,
+.theme-cyber .text-slate-500, .theme-cyber .text-slate-400, .theme-cyber .text-slate-300,
+.theme-sunset .text-slate-500, .theme-sunset .text-slate-400, .theme-sunset .text-slate-300,
+
+.theme-cosmic .text-gray-500, .theme-cosmic .text-gray-400, .theme-cosmic .text-gray-300,
+.theme-aurora .text-gray-500, .theme-aurora .text-gray-400, .theme-aurora .text-gray-300,
+.theme-cyber .text-gray-500, .theme-cyber .text-gray-400, .theme-cyber .text-gray-300,
+.theme-sunset .text-gray-500, .theme-sunset .text-gray-400, .theme-sunset .text-gray-300,
+
+.theme-cosmic .text-zinc-500, .theme-cosmic .text-zinc-400, .theme-cosmic .text-zinc-300,
+.theme-aurora .text-zinc-500, .theme-aurora .text-zinc-400, .theme-aurora .text-zinc-300,
+.theme-cyber .text-zinc-500, .theme-cyber .text-zinc-400, .theme-cyber .text-zinc-300,
+.theme-sunset .text-zinc-500, .theme-sunset .text-zinc-400, .theme-sunset .text-zinc-300,
+
+.theme-cosmic .text-neutral-500, .theme-cosmic .text-neutral-400, .theme-cosmic .text-neutral-300,
+.theme-aurora .text-neutral-500, .theme-aurora .text-neutral-400, .theme-aurora .text-neutral-300,
+.theme-cyber .text-neutral-500, .theme-cyber .text-neutral-400, .theme-cyber .text-neutral-300,
+.theme-sunset .text-neutral-500, .theme-sunset .text-neutral-400, .theme-sunset .text-neutral-300 {
+  color: var(--text-muted) !important;
+}
+
+/* Force standard dark mode form fields */
+.theme-cosmic input, .theme-cosmic select, .theme-cosmic textarea,
+.theme-aurora input, .theme-aurora select, .theme-aurora textarea,
+.theme-cyber input, .theme-cyber select, .theme-cyber textarea {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+}
+
+.theme-sunset input, .theme-sunset select, .theme-sunset textarea {
+  background-color: var(--bg-page) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+}
+
+.theme-cosmic input::placeholder, .theme-cosmic textarea::placeholder,
+.theme-aurora input::placeholder, .theme-aurora textarea::placeholder,
+.theme-cyber input::placeholder, .theme-cyber textarea::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 0.6;
+}
+
+.theme-cosmic select option,
+.theme-aurora select option,
+.theme-cyber select option {
+  background-color: var(--bg-card) !important;
+  color: var(--text-main) !important;
+}
+
+/* Border overrides */
+.theme-cosmic .border-slate-100, .theme-cosmic .border-slate-200, .theme-cosmic .border-slate-205, .theme-cosmic .border-slate-300,
+.theme-aurora .border-slate-100, .theme-aurora .border-slate-200, .theme-aurora .border-slate-205, .theme-aurora .border-slate-300,
+.theme-sunset .border-slate-100, .theme-sunset .border-slate-200, .theme-sunset .border-slate-205, .theme-sunset .border-slate-300,
+.theme-cyber .border-slate-100, .theme-cyber .border-slate-200, .theme-cyber .border-slate-205, .theme-cyber .border-slate-300 {
+  border-color: var(--border-color) !important;
+}
+
+/* Accent Buttons */
+.theme-cosmic .bg-indigo-600, .theme-cosmic .bg-indigo-500,
+.theme-aurora .bg-indigo-600, .theme-aurora .bg-indigo-500,
+.theme-sunset .bg-indigo-600, .theme-sunset .bg-indigo-500,
+.theme-cyber .bg-indigo-600, .theme-cyber .bg-indigo-505 {
+  background-color: var(--accent-color) !important;
+  color: #ffffff !important;
+}
+
+.theme-cosmic .hover:bg-indigo-700, .theme-cosmic .hover:bg-indigo-750, .theme-cosmic .hover:bg-indigo-800,
+.theme-aurora .hover:bg-indigo-700, .theme-aurora .hover:bg-indigo-750, .theme-aurora .hover:bg-indigo-800,
+.theme-sunset .hover:bg-indigo-700, .theme-sunset .hover:bg-indigo-750, .theme-sunset .hover:bg-indigo-800,
+.theme-cyber .hover:bg-indigo-700, .theme-cyber .hover:bg-indigo-750, .theme-cyber .hover:bg-indigo-800 {
+  background-color: var(--accent-hover) !important;
+}
+
+/* Text Accent Tints */
+.theme-cosmic .text-indigo-600, .theme-cosmic .text-indigo-700,
+.theme-aurora .text-indigo-600, .theme-aurora .text-indigo-700,
+.theme-sunset .text-indigo-600, .theme-sunset .text-indigo-700,
+.theme-cyber .text-indigo-600, .theme-cyber .text-indigo-700 {
+  color: var(--accent-text) !important;
+}
+
+/* Light Accent Bags/Pills */
+.theme-cosmic .bg-indigo-50, .theme-cosmic .bg-indigo-100,
+.theme-aurora .bg-indigo-50, .theme-aurora .bg-indigo-100,
+.theme-sunset .bg-indigo-50, .theme-sunset .bg-indigo-100,
+.theme-cyber .bg-indigo-50, .theme-cyber .bg-indigo-100 {
+  background-color: var(--accent-light) !important;
+  color: var(--accent-text) !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Active navigation item backgrounds and outlines */
+.theme-cosmic #nav-tabs-rail .bg-indigo-50,
+.theme-aurora #nav-tabs-rail .bg-indigo-50,
+.theme-sunset #nav-tabs-rail .bg-indigo-50,
+.theme-cyber #nav-tabs-rail .bg-indigo-50 {
+  background-color: var(--accent-light) !important;
+  color: var(--accent-text) !important;
+  border: 1px solid var(--accent-color) !important;
+}
+
+.theme-cosmic .bg-indigo-600,
+.theme-aurora .bg-indigo-600,
+.theme-sunset .bg-indigo-600,
+.theme-cyber .bg-indigo-600 {
+  background-color: var(--accent-color) !important;
+}
+
+/* Inner containers and secondary backgrounds (like table heads / custom sliders) */
+.theme-cosmic .bg-slate-50, .theme-cosmic .bg-slate-100, .theme-cosmic .bg-slate-200, .theme-cosmic .bg-gray-50, .theme-cosmic .bg-gray-100, .theme-cosmic .bg-gray-200, .theme-cosmic .bg-zinc-50, .theme-cosmic .bg-zinc-100, .theme-cosmic .bg-zinc-200, .theme-cosmic .bg-neutral-50, .theme-cosmic .bg-neutral-100, .theme-cosmic .bg-neutral-200,
+.theme-aurora .bg-slate-50, .theme-aurora .bg-slate-100, .theme-aurora .bg-slate-200, .theme-aurora .bg-gray-50, .theme-aurora .bg-gray-100, .theme-aurora .bg-gray-200, .theme-aurora .bg-zinc-50, .theme-aurora .bg-zinc-100, .theme-aurora .bg-zinc-200, .theme-aurora .bg-neutral-50, .theme-aurora .bg-neutral-100, .theme-aurora .bg-neutral-200,
+.theme-cyber .bg-slate-50, .theme-cyber .bg-slate-100, .theme-cyber .bg-slate-200, .theme-cyber .bg-gray-50, .theme-cyber .bg-gray-100, .theme-cyber .bg-gray-200, .theme-cyber .bg-zinc-50, .theme-cyber .bg-zinc-100, .theme-cyber .bg-zinc-200, .theme-cyber .bg-neutral-50, .theme-cyber .bg-neutral-100, .theme-cyber .bg-neutral-200 {
+  background-color: rgba(0, 0, 0, 0.25) !important;
+  border-color: var(--border-color) !important;
+}
+
+.theme-sunset .bg-slate-50, .theme-sunset .bg-slate-100, .theme-sunset .bg-slate-200, .theme-sunset .bg-gray-50, .theme-sunset .bg-gray-100, .theme-sunset .bg-gray-200, .theme-sunset .bg-zinc-50, .theme-sunset .bg-zinc-100, .theme-sunset .bg-zinc-200, .theme-sunset .bg-neutral-50, .theme-sunset .bg-neutral-100, .theme-sunset .bg-neutral-200 {
+  background-color: #F1EAE1 !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Recharts / SVG visual style adjustments in dark mode */
+.theme-cosmic svg text, .theme-aurora svg text, .theme-cyber svg text, .theme-sunset svg text {
+  fill: var(--text-muted) !important;
+}
+
+.theme-cosmic .recharts-default-tooltip,
+.theme-aurora .recharts-default-tooltip,
+.theme-cyber .recharts-default-tooltip,
+.theme-sunset .recharts-default-tooltip {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-main) !important;
+}

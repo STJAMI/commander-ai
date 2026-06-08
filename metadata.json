@@ -1,0 +1,6 @@
+{
+  "name": "AI Study Commander",
+  "description": "An AI-powered personal study manager with custom routine schedules, Pomodoro tracking, quiz generation, spaced repetition, weakness analysis, and academic assistance.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
