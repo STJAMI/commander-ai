@@ -16,6 +16,7 @@ import OnboardingGuide from "./components/OnboardingGuide";
 import AchievementsShowcase from "./components/AchievementsShowcase";
 import { useSystemThemeSuggestion } from "./hooks/useSystemThemeSuggestion";
 import CommandPalette from "./components/CommandPalette";
+import InteractiveStepGuide from "./components/InteractiveStepGuide";
 
 // Import AI-Study Companion sub-modules
 import AITwin from "./components/AITwin";
@@ -102,30 +103,30 @@ export default function App() {
     return () => unsubscribe();
   }, []);
 
-  // Load persistent states
+  // Load persistent states (clean by default for new registrations/guest accounts unless loaded manually)
   const [subjects, setSubjects] = useState<Subject[]>(() => {
     const saved = localStorage.getItem("study_commander_subjects");
-    return saved ? JSON.parse(saved) : INITIAL_SUBJECTS;
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [chapters, setChapters] = useState<Chapter[]>(() => {
     const saved = localStorage.getItem("study_commander_chapters");
-    return saved ? JSON.parse(saved) : INITIAL_CHAPTERS;
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [tasks, setTasks] = useState<Task[]>(() => {
     const saved = localStorage.getItem("study_commander_tasks");
-    return saved ? JSON.parse(saved) : INITIAL_TASKS;
+    return saved ? JSON.parse(saved) : [];
   });
 
   const [focusMinutes, setFocusMinutes] = useState<number>(() => {
     const saved = localStorage.getItem("study_commander_focus_mins");
-    return saved ? Number(saved) : 270; // Pre-populated 4h 30m as matching checklist
+    return saved ? Number(saved) : 0;
   });
 
   const [streakDays, setStreakDays] = useState<number>(() => {
     const saved = localStorage.getItem("study_commander_streak");
-    return saved ? Number(saved) : 5;
+    return saved ? Number(saved) : 0;
   });
 
   const [quizResults, setQuizResults] = useState<QuizResult[]>(() => {
@@ -140,7 +141,17 @@ export default function App() {
 
   const [weaknessDiagnostic, setWeaknessDiagnostic] = useState<any>(() => {
     const saved = localStorage.getItem("study_commander_diagnostic");
-    return saved ? JSON.parse(saved) : {
+    return saved ? JSON.parse(saved) : null;
+  });
+
+  // Action methods to load academic template parameters or wipe everything
+  const handleLoadDemoSyllabus = () => {
+    setSubjects(INITIAL_SUBJECTS);
+    setChapters(INITIAL_CHAPTERS);
+    setTasks(INITIAL_TASKS);
+    setFocusMinutes(270);
+    setStreakDays(5);
+    setWeaknessDiagnostic({
       overallInsight: "You're showing consistent focus. Let's work to bring Mathematics and Physics Chapter 4 Newtonian Mechanics up to par.",
       weaknesses: [
         {
@@ -150,8 +161,31 @@ export default function App() {
           planOfAction: "Review work problems and schedule a Spaced Repetition exercise session."
         }
       ]
-    };
-  });
+    });
+    triggerCelebration("Trial Template Loaded! 📊", "Successfully pre-populated your cockpit with collegiate Physics, Math, and ICT courses so you can explore all modules instantly.");
+  };
+
+  const handleClearAllData = () => {
+    const confirmClear = window.confirm("Reset your workspace? This will erase all courses, chapters, routines, and logged study minutes.");
+    if (!confirmClear) return;
+    setSubjects([]);
+    setChapters([]);
+    setTasks([]);
+    setFocusMinutes(0);
+    setStreakDays(0);
+    setWeaknessDiagnostic(null);
+    localStorage.removeItem("study_commander_generated_routine");
+    // Clear study keys
+    localStorage.removeItem("study_commander_subjects");
+    localStorage.removeItem("study_commander_chapters");
+    localStorage.removeItem("study_commander_tasks");
+    localStorage.removeItem("study_commander_focus_mins");
+    localStorage.removeItem("study_commander_streak");
+    localStorage.removeItem("study_commander_quiz_results");
+    localStorage.removeItem("study_commander_repetitions");
+    localStorage.removeItem("study_commander_diagnostic");
+    triggerCelebration("Workspace Reset Complete 🧹", "All courses and logged statistics have been wiped. Let's build a pristine syllabus!");
+  };
 
   const [runningDiagnostic, setRunningDiagnostic] = useState(false);
 
@@ -513,6 +547,10 @@ export default function App() {
 
   // Run AI Weakness Detector dynamic diagnostic calculations
   const handleRunDiagnostic = async () => {
+    if (subjects.length === 0) {
+      alert("Please set up or import some course subjects first in the Syllabus tab before running weakness diagnostics!");
+      return;
+    }
     setRunningDiagnostic(true);
     try {
       const activeScoreMetrics = quizResults.map(q => ({
@@ -674,24 +712,25 @@ export default function App() {
               </div>
             </motion.div>
 
-            {/* Quick Command Palette Trigger (Search icon & key combination indicator) */}
+            {/* Quick Command Palette Trigger (Search icon & key combination indicator with shrink-0 and responsive label wrapping to prevent collision) */}
             <button
                onClick={() => setIsPaletteOpen(true)}
-               className="hidden sm:flex items-center gap-2 bg-slate-50 hover:bg-slate-100 hover:border-slate-300 border border-slate-200 px-3.5 py-1.5 rounded-full text-slate-400 font-bold cursor-pointer transition ml-4 shadow-sm hover:shadow-xs"
+               className="hidden sm:flex items-center gap-2 bg-slate-50 hover:bg-slate-100 hover:border-slate-300 border border-slate-200 px-3.5 py-1.5 rounded-full text-slate-400 font-bold cursor-pointer transition ml-4 shadow-sm hover:shadow-xs shrink-0"
                title="Open command terminal search palette (Ctrl+K)"
                id="header-palette-search-trigger"
             >
               <Search className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-              <span className="text-[11px] text-slate-500 font-bold shrink-0">Search Spaces...</span>
-              <span className="text-[9px] font-extrabold font-mono tracking-wider bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded border border-slate-300">
+              <span className="text-[11px] text-slate-500 font-bold shrink-0 hidden md:inline">Search Spaces...</span>
+              <span className="text-[11px] text-slate-500 font-bold shrink-0 inline md:hidden">Search</span>
+              <span className="text-[9px] font-extrabold font-mono tracking-wider bg-slate-200/80 text-slate-600 px-1.5 py-0.5 rounded border border-slate-300 shrink-0">
                 ⌘K
               </span>
             </button>
           </div>
 
           <div className="flex items-center gap-3 sm:gap-4">
-            {/* Elegant multi-theme selector pill */}
-            <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 pl-2.5 pr-3 py-1.5 rounded-full shadow-sm" id="theme-selector-bubble">
+            {/* Elegant multi-theme selector pill (with shrink-0 to ensure safe spacing in dynamic layouts) */}
+            <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 pl-2.5 pr-3 py-1.5 rounded-full shadow-sm shrink-0" id="theme-selector-bubble">
               <svg className="w-3.5 h-3.5 text-indigo-500 animate-pulse shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-3.03a1.962 1.962 0 01-1.453-.625L12 10.828a2 2 0 00-3.414-1.414l-1.414 1.414a2 2 0 002.828 2.828l1.414-1.414"></path>
               </svg>
@@ -843,6 +882,21 @@ export default function App() {
 
       {/* Primary Workspace container */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 pb-20 lg:pb-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        {/* Dynamic Study Space Setup Companion (Spans full width at the very top of workspace viewport) */}
+        <div className="col-span-1 lg:col-span-12" id="global-interactive-study-companion-roadmap">
+          <InteractiveStepGuide
+            subjectsCount={subjects.length}
+            chaptersCount={chapters.length}
+            hasRoutine={!!localStorage.getItem("study_commander_generated_routine")}
+            focusMinutes={focusMinutes}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            onLoadDemoData={handleLoadDemoSyllabus}
+            onClearDemoData={handleClearAllData}
+          />
+        </div>
+
         {/* Navigation Sidebar Pane Column (For desktop focus viewports) */}
         <div className="hidden lg:flex lg:col-span-3 space-y-5 flex-col" id="app-sidebar-nav-container">
           {/* Main Navigation links card */}

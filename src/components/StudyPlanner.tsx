@@ -285,10 +285,22 @@ export default function StudyPlanner({
                 ))}
               </div>
             ) : (
-              <div className="py-20 text-center flex flex-col items-center justify-center border border-dashed border-slate-200 rounded-2xl bg-slate-50/40 my-4 gap-2">
-                <Calendar className="w-10 h-10 text-slate-300" />
-                <span className="text-xs text-slate-400 font-bold">Your schedule routine is blank</span>
-                <span className="text-[11px] text-slate-400 px-8 text-center leading-normal">Confirm study hours on the left and trigger routine construction.</span>
+              <div className="py-16 px-6 text-center flex flex-col items-center justify-center border border-dashed border-slate-200 rounded-3xl bg-slate-50/40 my-4 gap-3" id="planner-empty-routine-guide">
+                <div className="p-3 bg-indigo-50 text-indigo-600 rounded-2xl border border-indigo-100/50 shadow-2xs">
+                  <Calendar className="w-8 h-8" />
+                </div>
+                <div className="space-y-1.5 text-center">
+                  <span className="text-xs font-black text-slate-700 block">Step 3 Guide: Construct Your Routine Slots</span>
+                  <p className="text-[11px] text-slate-400 max-w-sm mx-auto leading-relaxed">
+                    {subjects.length === 0 ? (
+                      <span className="text-rose-600 font-bold block">
+                        ⚠️ Please add study subjects first in the Syllabus tab before compiling custom daily study routine blocks!
+                      </span>
+                    ) : (
+                      "Set your exam date and your daily available study hours on the left, check the subjects to include, then click the 'Generate AI Routine Plan' button. Our optimized memory model will compile day-to-day slots tailored to difficult topics."
+                    )}
+                  </p>
+                </div>
               </div>
             )}
           </div>

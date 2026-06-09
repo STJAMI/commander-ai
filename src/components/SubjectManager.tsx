@@ -393,6 +393,15 @@ export default function SubjectManager({
           <p className="text-slate-400 text-xs mb-4">Enroll and manage active courses of the current syllabus</p>
  
           <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
+            {subjects.length === 0 && (
+              <div className="py-8 px-4 text-center border border-dashed border-slate-200 rounded-2xl bg-indigo-50/15 flex flex-col items-center justify-center gap-1.5" id="empty-subjects-guide">
+                <span className="text-xl">📚</span>
+                <strong className="text-xs font-bold text-slate-700 block">Step 1 Guide: Enroll Subjects First</strong>
+                <p className="text-[10px] text-slate-450 leading-normal max-w-xs text-center">
+                  Your academic console is pristine and ready. Type a subject title (e.g., Physics, Mathematics, ICT) inside the form below to register your courses, or use the 🧙‍♂️ AI Architect top-deck.
+                </p>
+              </div>
+            )}
             {subjects.map((sub) => {
               const subChapters = chapters.filter(c => c.subjectId === sub.id);
               const done = subChapters.filter(c => c.status === "completed").length;
@@ -592,8 +601,12 @@ export default function SubjectManager({
               {/* Chapters Syllabus list (showing checkboxes & status matching Example: Physics 1 table) */}
               <div className="space-y-3 max-h-96 overflow-y-auto pr-1">
                 {activeChapters.length === 0 ? (
-                  <div className="text-center py-10 text-xs text-slate-400 border border-dashed border-slate-200 rounded-2xl bg-slate-50/20">
-                    Syllabus is currently empty. Input chapters above.
+                  <div className="text-center py-12 px-6 text-xs text-slate-400 border border-dashed border-slate-200 rounded-3xl bg-slate-50/20 flex flex-col items-center justify-center gap-2" id="empty-chapters-guide">
+                    <span className="text-2xl">📝</span>
+                    <strong className="text-xs font-bold text-slate-700 block">Step 2 Guide: Add Course Chapters to "{activeSubject.name}"</strong>
+                    <p className="text-[10px] text-slate-400 max-w-sm leading-relaxed text-center">
+                      There are no syllabus chapters or topics mapped under this course yet. Use the light green form above to log chapters (e.g. "Chapter 4: Vectors", "Newtonian Science") along with their estimated hours.
+                    </p>
                   </div>
                 ) : (
                   activeChapters.map((chapter) => {
